@@ -1,0 +1,75 @@
+import * as React from 'react';
+import EditTask from "./EditTask";
+import CheckIcon from '@mui/icons-material/Check';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
+
+export default function Task({title, id, handleDelete, handleFinish, status}){
+  console.log(status)
+  const [taskTitle, setTaskTitle] = React.useState(title)
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOnSave = (taskText) => {
+    setTaskTitle(taskText.title)
+  }
+
+
+  return(
+    <div style={{fontFamily:"'Work Sans', sans-serif",
+      display:"flex",
+      flexDirection:"row",
+      justifyContent:"space-between",
+      alignItems:"center",
+      padding:"15px 6px 15px 15px",
+      borderRadius:"5px",
+      borderBottom:"1px solid #D9CDA9"
+      }}>
+      <div style={{display:"flex", gap:"5px", alignItems:"center"}}>
+        <CheckIcon 
+        className={`check-btn ${status === "finished" ? 'active-check-btn' : ''}`}
+        style={{transition:"0.2s",
+          width:"15px",
+          height:"15px"
+        }}
+        
+          onClick={() => handleFinish(id)}
+        />
+        <div style={{fontSize:"12.5px", margin:"0", color: status === "finished" ? '#777' : "#1B2434", textDecoration: status === "finished" ? 'line-through' : ""}}>{taskTitle}</div>
+      </div>
+
+      <div style={{display:"flex", gap:"5px"}}>
+        <DeleteForeverIcon
+        className='delete-icon'
+          style={{
+            width:"15px",
+            height:"15px",
+            transition:'0.2s'
+          }}
+          
+          onClick={() => handleDelete(id) }
+        />
+        <EditIcon 
+          className='edit-icon'
+          style={{
+            width: "15px",
+            height: "15px",
+            transition: "0.2s"
+          }}
+            
+          onClick={handleClickOpen}
+          />
+      </div>
+      <EditTask open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} onSave={handleOnSave}/>
+    </div>
+  );
+}
