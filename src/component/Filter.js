@@ -1,9 +1,12 @@
 import * as React from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { TasksActionsContext } from '../context/TasksActionsContext';
+import { useContext } from 'react';
 
+export default function FilterBtn(){
+  const {handleStatusChange} = useContext(TasksActionsContext)
 
-export default function FilterBtn({handleStatusChange}){
   const [alignment, setAlignment] = React.useState('all');
   
   const handleChange = (event, newAlignment) => {

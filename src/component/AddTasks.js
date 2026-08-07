@@ -1,4 +1,11 @@
-export default function AddTasks({inputValue, handleAddBtn, setInputValue}){
+import { useContext } from "react";
+import { TasksActionsContext } from "../context/TasksActionsContext";
+import { TaskDataContext } from "../context/TasksDataContext";
+export default function AddTasks(){
+  const {inputValue, setInputValue} = useContext(TaskDataContext);
+  const {handleAddBtn} = useContext(TasksActionsContext);
+
+
   return(
     <div style={{display:"flex", justifyContent:"center", gap:"10px", padding:"6px 15px 14px 15px", borderBottom:"1px solid #D9CDA9"}}>
       <input 
