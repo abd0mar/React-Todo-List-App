@@ -19,6 +19,7 @@ export default function AddTasks(){
         className="add-btn"
         style={{}}
         onClick={handleAddBtn}
+        disabled={inputValue.length === 0}
       >+ Add</button>
     </div>
   );

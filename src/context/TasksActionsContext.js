@@ -11,12 +11,14 @@ export function TasksActionsProvider({children}){
     if(inputValue.trim() !== ""){
       setTasksArray([...tasksArray, { title: inputValue, id: Date.now(), status: "unfinished"}]);
       setInputValue("");
+      localStorage.setItem("Tasks", JSON.stringify([...tasksArray, { title: inputValue, id: Date.now(), status: "unfinished"}]))
     }
   }
 
   const hendleDelete = (taskId) => {
     const updatedList = tasksArray.filter((task) => task.id !== taskId);
     setTasksArray(updatedList);
+    localStorage.setItem("Tasks", JSON.stringify(updatedList))
   }
 
   const handleFinishTask = (taskId) => {
