@@ -29,7 +29,7 @@ export function TasksActionsProvider({children}){
       return task;
     })
     setTasksArray(updatedList);
-
+    localStorage.setItem("Tasks", JSON.stringify(updatedList))
   }
   
   const handleStatusChange = (filterStatus) => {
