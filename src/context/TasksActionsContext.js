@@ -8,10 +8,11 @@ export function TasksActionsProvider({children}){
   const {tasksArray, setTasksArray, inputValue, setInputValue, setStatus} = useContext(TaskDataContext);
 
   const handleAddBtn = () => {
+    let id = Date.now();
     if(inputValue.trim() !== ""){
-      setTasksArray([...tasksArray, { title: inputValue, id: Date.now(), status: "unfinished"}]);
+      setTasksArray([...tasksArray, { title: inputValue, id: id, status: "unfinished"}]);
       setInputValue("");
-      localStorage.setItem("Tasks", JSON.stringify([...tasksArray, { title: inputValue, id: Date.now(), status: "unfinished"}]))
+      localStorage.setItem("Tasks", JSON.stringify([...tasksArray, { title: inputValue, id: id, status: "unfinished"}]))
     }
   }
 
@@ -36,12 +37,23 @@ export function TasksActionsProvider({children}){
     setStatus(filterStatus);
   }
 
+  const handleEditTask = (taskId, newTitle) => {
+    const updatedList = tasksArray.map((task) => {
+      return task.id === taskId ? {...task, title:newTitle} : task;
+    })
+    setTasksArray(updatedList)
+    localStorage.setItem("Tasks", JSON.stringify(updatedList))
+  }
+
+  // useEffect(() => {localStorage.setItem("Tasks", JSON.stringify(tasksArray))}, [tasksArray])
+
   return (
     <TasksActionsContext.Provider value={{
       handleAddBtn,
       hendleDelete,
       handleFinishTask,
       handleStatusChange,
+      handleEditTask
     }}>
       {children}
     </TasksActionsContext.Provider>

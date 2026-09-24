@@ -9,9 +9,11 @@ export default function FilterBtn(){
 
   const [alignment, setAlignment] = React.useState('all');
   
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
-    handleStatusChange(newAlignment)
+  const handleChange = (_, newAlignment) => {
+    if(newAlignment !== null){
+      setAlignment(newAlignment);
+      handleStatusChange(newAlignment);
+    }
   };
 
   return (

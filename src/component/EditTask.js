@@ -4,18 +4,16 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function EditTask({handleClickOpen, handleClose, open, onSave}) {
 
-  // const [taskText, setTaskText] = React.useState([])
+export default function EditTask({handleClickOpen, handleClose, open, onSave, currentTitle}) {
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
-    // setTaskText(formJson)
     onSave(formJson);
     handleClose();
   };
@@ -44,7 +42,7 @@ export default function EditTask({handleClickOpen, handleClose, open, onSave}) {
               type="text"
               fullWidth
               variant="standard"
-              
+              defaultValue={currentTitle}
             />
           </form>
         </DialogContent>

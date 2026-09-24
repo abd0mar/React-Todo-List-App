@@ -7,13 +7,12 @@ import { useContext } from "react";
 import { TasksActionsContext } from "../context/TasksActionsContext";
 
 export default function Task({title, id, status}){
-  const { hendleDelete, handleFinishTask } = useContext(TasksActionsContext);
-  const [taskTitle, setTaskTitle] = React.useState(title);
+  const { hendleDelete, handleFinishTask, handleEditTask} = useContext(TasksActionsContext);
   const [open, setOpen] = React.useState(false);
   
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleOnSave = (taskText) => setTaskTitle(taskText.title);
+  const handleOnSave = (taskText) => handleEditTask(id, taskText.title);
 
   return(
     <div style={{
@@ -38,7 +37,7 @@ export default function Task({title, id, status}){
           color: status === "finished" ? '#777' : "#1B2434", 
           textDecoration: status === "finished" ? 'line-through' : ""
         }}>
-          {taskTitle}
+          {title}
         </div>
       </div>
 
@@ -54,7 +53,7 @@ export default function Task({title, id, status}){
           onClick={handleClickOpen}
         />
       </div>
-      <EditTask open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} onSave={handleOnSave}/>
+      <EditTask open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} onSave={handleOnSave} currentTitle={title}/>
     </div>
   );
 }
