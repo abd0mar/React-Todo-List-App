@@ -5,14 +5,14 @@ import { useContext } from "react";
 export const TasksActionsContext = createContext()
 
 export function TasksActionsProvider({children}){
-  const {tasksArray, setTasksArray, inputValue, setInputValue, setStatus} = useContext(TaskDataContext);
+  const {tasksArray, setTasksArray, setStatus} = useContext(TaskDataContext);
 
-  const handleAddBtn = () => {
+  const handleAddBtn = (inputValue) => {
     let id = Date.now();
+    const updatedList = [...tasksArray, { title: inputValue, id: id, status: "unfinished"}]
     if(inputValue.trim() !== ""){
-      setTasksArray([...tasksArray, { title: inputValue, id: id, status: "unfinished"}]);
-      setInputValue("");
-      localStorage.setItem("Tasks", JSON.stringify([...tasksArray, { title: inputValue, id: id, status: "unfinished"}]))
+      setTasksArray(updatedList);
+      localStorage.setItem("Tasks", JSON.stringify(updatedList))
     }
   }
 
@@ -44,9 +44,7 @@ export function TasksActionsProvider({children}){
     setTasksArray(updatedList)
     localStorage.setItem("Tasks", JSON.stringify(updatedList))
   }
-
-  // useEffect(() => {localStorage.setItem("Tasks", JSON.stringify(tasksArray))}, [tasksArray])
-
+  
   return (
     <TasksActionsContext.Provider value={{
       handleAddBtn,

@@ -4,8 +4,12 @@ import { TaskDataContext } from "../context/TasksDataContext";
 export default function AddTasks(){
   const {inputValue, setInputValue} = useContext(TaskDataContext);
   const {handleAddBtn} = useContext(TasksActionsContext);
+  const onSubmit = () => {
+    handleAddBtn(inputValue);
+    setInputValue("");
+  }
   const handleOnKeyDown = (e) => {
-    if(e.key === "Enter") handleAddBtn();
+    if(e.key === "Enter") onSubmit();
     if (e.key === "Escape") setInputValue("")
   }
 
@@ -23,7 +27,7 @@ export default function AddTasks(){
       <button 
         className="add-btn"
         style={{}}
-        onClick={handleAddBtn}
+        onClick={onSubmit}
         disabled={inputValue.length === 0 || inputValue.trim().length === 0}
       >+ Add</button>
     </div>
