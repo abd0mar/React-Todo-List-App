@@ -1,5 +1,6 @@
 import * as React from 'react';
 import EditTask from "./EditTask";
+import DeleteTask from './DeleteTask'
 import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -8,11 +9,16 @@ import { TasksActionsContext } from "../context/TasksActionsContext";
 
 export default function Task({title, id, status}){
   const { hendleDelete, handleFinishTask, handleEditTask} = useContext(TasksActionsContext);
-  const [open, setOpen] = React.useState(false);
-  
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleOnSave = (taskText) => handleEditTask(id, taskText.title);
+  //Edit Message......
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const handleClickOpenEdit = () => setOpenEdit(true);
+  const handleCloseEdit = () => setOpenEdit(false);
+  const handleOnSaveEdit = (taskText) => handleEditTask(id, taskText.title);
+  //Delete Message......
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
+  const handleDelete = () => hendleDelete(id);
 
   return(
     <div style={{
@@ -45,15 +51,16 @@ export default function Task({title, id, status}){
         <DeleteForeverIcon
           className='delete-icon'
           style={{width:"15px", height:"15px", transition:'0.2s'}}
-          onClick={() => hendleDelete(id)}
+          onClick={handleOpenDelete}
         />
         <EditIcon 
           className='edit-icon'
           style={{width: "15px", height: "15px", transition: "0.2s"}}
-          onClick={handleClickOpen}
+          onClick={handleClickOpenEdit}
         />
       </div>
-      <EditTask open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} onSave={handleOnSave} currentTitle={title}/>
+      <EditTask open={openEdit} handleClose={handleCloseEdit} onSave={handleOnSaveEdit} currentTitle={title}/>
+      <DeleteTask open={openDelete} handleCloseDelete={handleCloseDelete} handleDelete={handleDelete}/>
     </div>
   );
 }

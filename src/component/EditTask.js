@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-export default function EditTask({handleClickOpen, handleClose, open, onSave, currentTitle}) {
+export default function EditTask({handleClose, open, onSave, currentTitle}) {
   
 
   const handleSubmit = (event) => {
