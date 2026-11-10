@@ -1,24 +1,24 @@
 import * as React from 'react';
-import EditTask from "./EditTask";
-import DeleteTask from './DeleteTask'
+// import EditTask from "./EditTask";
+// import DeleteTask from './DeleteTask'
 import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useContext } from "react";
 import { TasksActionsContext } from "../context/TasksActionsContext";
 
-export default function Task({title, id, status}){
-  const { hendleDelete, handleFinishTask, handleEditTask} = useContext(TasksActionsContext);
-  //Edit Message......
-  const [openEdit, setOpenEdit] = React.useState(false);
-  const handleClickOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
-  const handleOnSaveEdit = (taskText) => handleEditTask(id, taskText.title);
-  //Delete Message......
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
-  const handleDelete = () => hendleDelete(id);
+export default function Task({title, id, status, showDelete, showEdit}){
+  const {handleFinishTask} = useContext(TasksActionsContext);
+  // //Edit Message......
+  // const [openEdit, setOpenEdit] = React.useState(false);
+  // const handleClickOpenEdit = () => setOpenEdit(true);
+  // const handleCloseEdit = () => setOpenEdit(false);
+  // const handleOnSaveEdit = (taskText) => handleEditTask(id, taskText.title);
+  // //Delete Message......
+  // const [openDelete, setOpenDelete] = React.useState(false);
+  // const handleOpenDelete = () => setOpenDelete(true);
+  // const handleCloseDelete = () => setOpenDelete(false);
+  // const handleDelete = () => hendleDelete(id);
 
   return(
     <div style={{
@@ -51,16 +51,16 @@ export default function Task({title, id, status}){
         <DeleteForeverIcon
           className='delete-icon'
           style={{width:"15px", height:"15px", transition:'0.2s'}}
-          onClick={handleOpenDelete}
+          onClick={showDelete}
         />
         <EditIcon 
           className='edit-icon'
           style={{width: "15px", height: "15px", transition: "0.2s"}}
-          onClick={handleClickOpenEdit}
+          onClick={showEdit}
         />
       </div>
-      <EditTask open={openEdit} handleClose={handleCloseEdit} onSave={handleOnSaveEdit} currentTitle={title}/>
-      <DeleteTask open={openDelete} handleCloseDelete={handleCloseDelete} handleDelete={handleDelete}/>
+      {/* <EditTask open={openEdit} handleClose={handleCloseEdit} onSave={handleOnSaveEdit} currentTitle={title}/>
+      <DeleteTask open={openDelete} handleCloseDelete={handleCloseDelete} handleDelete={handleDelete}/> */}
     </div>
   );
 }
