@@ -33,13 +33,20 @@ export function TasksActionsProvider({children}){
   const handleFinishTask = (taskId) => {
     const updatedList = tasksArray.map((task) => {
       if(taskId === task.id){
-        return task.status === "unfinished" ? {...task, status: "finished"} : {...task, status: "unfinished"};
+        if(task.status === "unfinished"){
+          handleOpenToast("The task was successfully completed");
+          return {...task, status: "finished"}
+        }else{
+          handleOpenToast("The task was successfully unchecked");
+          return {...task, status: "unfinished"}
+        }
+        // return task.status === "unfinished" ? {...task, status: "finished"} : {...task, status: "unfinished"};
       }
       return task;
     })
     setTasksArray(updatedList);
     localStorage.setItem("Tasks", JSON.stringify(updatedList))
-    handleOpenToast("The task was successfully completed");
+    // handleOpenToast("The task was successfully completed");
   }
   
   // Change status ..............
