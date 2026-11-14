@@ -1,9 +1,15 @@
 import { useContext } from "react";
 import { TasksActionsContext } from "../context/TasksActionsContext";
 import { TaskDataContext } from "../context/TasksDataContext";
+
+
+
 export default function AddTasks(){
   const {inputValue, setInputValue} = useContext(TaskDataContext);
   const {handleAddBtn} = useContext(TasksActionsContext);
+
+
+
   const onSubmit = () => {
     handleAddBtn(inputValue);
     setInputValue("");

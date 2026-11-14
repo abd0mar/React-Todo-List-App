@@ -1,22 +1,21 @@
 import * as React from 'react';
-import { useContext } from "react";
-import { TasksActionsContext } from "../context/TasksActionsContext";
+import { useContext , useEffect} from "react";
 
-import EditTask from "./EditTask";
-import DeleteTask from './DeleteTask'
+import { TasksActionsContext } from "../context/TasksActionsContext";
+import { TaskDataContext } from "../context/TasksDataContext";
+import EditTask from "./EditTaskWindow";
+import DeleteTask from './DeleteTaskWindow'
 import FilterBtn from "./Filter";
 import AddTasks from "./AddTasks";
-import { TaskDataContext } from "../context/TasksDataContext";
 import Task from "./Tasks";
-import {useEffect } from "react";
 import Counter from "./Counter";
 
 
 export default function TasksContainer(){
   const [activeTask, setActiveTask] = React.useState({id: null, title: ""})
-
   const { hendleDeleteTask, handleEditTask} = useContext(TasksActionsContext);
   const {filteredArray,  setTasksArray} = useContext(TaskDataContext);
+  
 
     //Edit Message......
     const [openEdit, setOpenEdit] = React.useState(false);
@@ -26,6 +25,7 @@ export default function TasksContainer(){
     };
     const handleCloseEdit = () => setOpenEdit(false);
     const handleOnSaveEdit = (taskText) => handleEditTask(activeTask.id, taskText.title);
+
     //Delete Message......
     const [openDelete, setOpenDelete] = React.useState(false);
     const handleOpenDelete = (task) => {
