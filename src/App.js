@@ -9,15 +9,11 @@ import { ToastContext } from './context/ToastContext';
 
 function App() {
   const [openToast, setOpenToast] = React.useState(false);
-  const [message, setMessage] = React.useState()
-  const handleOpenToast = (message) => {
-    setMessage(message)
-    setOpenToast(true)};
-  const handleCloseToast = () => setOpenToast(false);
+
 
 
   return (
-    <ToastContext.Provider value={{handleOpenToast}}>
+    <ToastContextProvider>
       <TasksDataProvider>
         <TasksActionsProvider>
             <div className="App" style={{display:"flex", height:"100vh", justifyContent:"center", alignItems:"center"}}>
@@ -26,7 +22,7 @@ function App() {
             </div>
         </TasksActionsProvider>
       </TasksDataProvider>
-    </ToastContext.Provider>
+    </ToastContextProvider>
   );
 }
 
