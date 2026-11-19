@@ -24,8 +24,8 @@ export function TasksActionsProvider({ children }) {
 
   // Finish task ..............
   const handleFinishTask = (taskId) => {
-    dispatch({ type: "finishTask", payload: { id: taskId } })
     const task = tasksArray.find((t) => t.id === taskId)
+    dispatch({ type: "finishTask", payload: { id: taskId } });
     if (taskId === task.id) task.status === "unfinished"
       ? handleOpenToast("The task was successfully completed")
       : handleOpenToast("The task was successfully unchecked")
@@ -38,10 +38,7 @@ export function TasksActionsProvider({ children }) {
 
   // Edit task ..............
   const handleEditTask = (taskId, newTitle) => {
-    const updatedList = tasksArray.map((task) => {
-      return task.id === taskId ? { ...task, title: newTitle } : task;
-    })
-    localStorage.setItem("Tasks", JSON.stringify(updatedList))
+    dispatch({type: "edit", payload: {title: newTitle, id: taskId}});
     handleOpenToast("The task was successfully modified");
   }
 
