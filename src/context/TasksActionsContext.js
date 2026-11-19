@@ -1,54 +1,36 @@
-import { createContext} from 'react'
+import { createContext, useContext } from 'react'
 import { TaskDataContext } from "../context/TasksDataContext";
-import { useContext } from "react";
 import { ToastContext } from "../context/ToastContext";
 
 
+// console.log(todosReducer)
 export const TasksActionsContext = createContext()
-export function TasksActionsProvider({children}){
-  const {handleOpenToast} = useContext(ToastContext);
-  const {tasksArray, setTasksArray, setStatus} = useContext(TaskDataContext);
+export function TasksActionsProvider({ children }) {
+  const { handleOpenToast } = useContext(ToastContext);
+  const { tasksArray, setStatus, dispatch } = useContext(TaskDataContext);
+
 
   // Add a new task ..............
   const handleAddBtn = (inputValue) => {
-    let id = Date.now();
-    const updatedList = [...tasksArray, { title: inputValue, id: id, status: "unfinished"}]
-    if(inputValue.trim() !== ""){
-      setTasksArray(updatedList);
-      localStorage.setItem("Tasks", JSON.stringify(updatedList))
-    }
-
+    dispatch({ type: "added", payload: { id: Date.now(), title: inputValue } });
     handleOpenToast("The task was successfully added");
   }
 
   // Delete task ..............
   const hendleDeleteTask = (taskId) => {
-    const updatedList = tasksArray.filter((task) => task.id !== taskId);
-    setTasksArray(updatedList);
-    localStorage.setItem("Tasks", JSON.stringify(updatedList))
+    dispatch({ type: "delete", payload: { id: taskId } })
     handleOpenToast("The task was successfully deleted");
   }
 
   // Finish task ..............
   const handleFinishTask = (taskId) => {
-    const updatedList = tasksArray.map((task) => {
-      if(taskId === task.id){
-        if(task.status === "unfinished"){
-          handleOpenToast("The task was successfully completed");
-          return {...task, status: "finished"}
-        }else{
-          handleOpenToast("The task was successfully unchecked");
-          return {...task, status: "unfinished"}
-        }
-        // return task.status === "unfinished" ? {...task, status: "finished"} : {...task, status: "unfinished"};
-      }
-      return task;
-    })
-    setTasksArray(updatedList);
-    localStorage.setItem("Tasks", JSON.stringify(updatedList))
-    // handleOpenToast("The task was successfully completed");
+    dispatch({ type: "finishTask", payload: { id: taskId } })
+    const task = tasksArray.find((t) => t.id === taskId)
+    if (taskId === task.id) task.status === "unfinished"
+      ? handleOpenToast("The task was successfully completed")
+      : handleOpenToast("The task was successfully unchecked")
   }
-  
+
   // Change status ..............
   const handleStatusChange = (filterStatus) => {
     setStatus(filterStatus);
@@ -57,13 +39,12 @@ export function TasksActionsProvider({children}){
   // Edit task ..............
   const handleEditTask = (taskId, newTitle) => {
     const updatedList = tasksArray.map((task) => {
-      return task.id === taskId ? {...task, title:newTitle} : task;
+      return task.id === taskId ? { ...task, title: newTitle } : task;
     })
-    setTasksArray(updatedList)
     localStorage.setItem("Tasks", JSON.stringify(updatedList))
     handleOpenToast("The task was successfully modified");
   }
-  
+
   return (
     <TasksActionsContext.Provider value={{
       handleAddBtn,
