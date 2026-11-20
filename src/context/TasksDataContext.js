@@ -3,9 +3,6 @@ import { createContext, useState, useMemo, useReducer, useEffect } from 'react'
 export const TaskDataContext = createContext()
 
 export function TasksDataProvider({ children }) {
-  // const [tasksArray, setTasksArray] = useState(() => 
-  //   JSON.parse(localStorage.getItem("Tasks") || "[]")
-  // )
   const [tasksArray, dispatch] = useReducer(todosReducer, [], () =>
     JSON.parse(localStorage.getItem("Tasks") || "[]")
   );
